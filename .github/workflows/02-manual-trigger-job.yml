@@ -15,5 +15,11 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
-
-
+    - name: Submit Azure ML Job
+      run: |
+        az ml job create \
+          -f src/job.yml \
+          -c ${{secrets.AZUREML_COMPUTE_TARGET}} \
+          -e ${{secrets.AZUREML_ENVIRONMENT_NAME}} \
+          -n ${{secrets.AZUREML_EXPERIMENT_NAME}} \
+          -d ${{secrets.AZUREML_JOB_DESCRIPTION}}
